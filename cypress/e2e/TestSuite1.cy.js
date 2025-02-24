@@ -58,8 +58,7 @@ describe('99.co Home Page Tests', () => {
   });
 
   it('close pop up', () =>{
-    //cy.get('.pdp-splash-screen__content__container__link > .ui-atomic-image').click(); // Change the selector based on your site
-    cy.get('body').click(0, 0); // Clicks top-left corner of the page
+    cy.get('body').click(0, 0);
   })
   
   it('should verify all required texts are visible', () => {
