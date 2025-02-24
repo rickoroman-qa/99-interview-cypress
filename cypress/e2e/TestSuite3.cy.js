@@ -15,33 +15,32 @@ describe("Test Suite 3", () => {
   });
 
   it('should load the home page successfully', () => {
-    cy.url().should('include', 'https://www.rumah123.com/');
-    cy.title().should('contain', 'Jual Beli Properti Rumah Apartemen | Rumah123');
-    cy.wait(3000)
+    cy.url().should('include', 'https://www.rumah123.com/')
+      .title().should('contain', 'Jual Beli Properti Rumah Apartemen | Rumah123')
+      .wait(3000)
   });
 
   it('close pop up', () =>{
-    //cy.get('.pdp-splash-screen__content__container__link > .ui-atomic-image').click(); // Change the selector based on your site
     cy.get('body').click(0, 0); // Clicks top-left corner of the page
   })
 
   it('Verify searching feature', () =>{
     // Type the keyword into the search box
-    cy.get('.search-input__container')
-    .should('be.visible')
-    .type('Apartment');
+    cy.get('.search-input__container input')
+      .should('be.visible')
+      .type('apartment', { force: true });
 
     // Click the "Cari" button
-    cy.get('body').click(0, 0); // Clicks top-left corner of the page
-    cy.get('.search-suggestion__button-wrapper > .ui-atomic-button')
+    cy.get('body').click(0, 0)
+      .get('.search-suggestion__button-wrapper > .ui-atomic-button')
       .contains('Cari').click({ force: true });
 
-    // Wait for results to load
-    //cy.wait(3000); 
-
-    // Verify search results are displayed
-    cy.get('.search-input__container > .search-input__token > span', { timeout: 10000 })
-      .should('be.visible')
-      .and('contain', 'Apartment'); // Ensure results contain the keyword
+    //Assert or verify keyword
+    cy.get('h1.ui-atomic-text.ui-atomic-text--styling-featured.ui-atomic-text--typeface-primary')
+      .invoke('text')
+      .then((text) => {
+          cy.log("Search result text:", text);
+      expect(text.trim()).to.contain('apartment');
+    });
   })
 });
